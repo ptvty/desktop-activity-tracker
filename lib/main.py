@@ -6,6 +6,9 @@ from lib.helpers import console_args, null_stderr
 
 def main():
     args = console_args()
+    if not args.enable_stderr:
+        null_stderr()
+
     activity = Activity(args.project_name)
     ticker = Ticker(activity)
     even_hanlder = EventHandler(activity)
