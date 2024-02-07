@@ -45,7 +45,7 @@ class Shutter:
         message = f'Window: {info['window_title']}'
         notification = Notification(
             title=title if len(title) <= 62 else title[:60] + '...',
-            message=message if len(title) <= 122 else message[:120] + '...'[:120]
+            message=message if len(message) <= 122 else message[:120] + '...'[:120]
         )
         c.register_backend(platform.Backend())
         c.notify_all(notification)
