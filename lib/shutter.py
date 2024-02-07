@@ -56,8 +56,7 @@ class Shutter:
         return window.title if window else 'No-Title'
 
     def project_name(self):
-        import sys
-        return sys.argv[1] if len(sys.argv) > 1 else 'DEFAULT'
+        return self.activity.project_name
 
     def slugify(self, value, allow_unicode=True):
         import unicodedata

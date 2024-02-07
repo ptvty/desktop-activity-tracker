@@ -2,12 +2,13 @@ import time
 from lib.activity import Activity
 from lib.event_handler import EventHandler
 from lib.ticker import Ticker
-
-activity = Activity()
-ticker = Ticker(activity)
-even_hanlder = EventHandler(activity)
+from lib.helpers import console_args, null_stderr
 
 def main():
+    args = console_args()
+    activity = Activity(args.project_name)
+    ticker = Ticker(activity)
+    even_hanlder = EventHandler(activity)
     even_hanlder.listen()
     while True:
         activity.tick()

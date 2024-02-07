@@ -1,8 +1,9 @@
 class Activity:
-    def __init__(self):
+    def __init__(self, project_name):
         self.keyboard = 0
         self.mouse = 0
         self.history = []
+        self.project_name = project_name
 
     def tick(self):
         record = [self.keyboard, self.mouse]
