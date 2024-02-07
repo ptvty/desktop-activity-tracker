@@ -13,6 +13,8 @@ def main():
     ticker = Ticker(activity)
     even_hanlder = EventHandler(activity)
     even_hanlder.listen()
+    print('📸 Taking screenshots every 10 minutes - at randomized moments')
+    print('📂 Saving in "Screenshots" directory\n')
     while True:
         activity.tick()
         ticker.tick()

@@ -14,6 +14,7 @@ class Shutter:
         self.screenshotter = mss()
         self.screenshotter.compression_level = 9
         self.activity = activity
+        print(f'✅ Tracking started for "{self.project_name()}" project')
 
     def shot(self):
         shot_info = self.shot_info()
@@ -32,6 +33,7 @@ class Shutter:
             'project_name': project_name,
             'window_title': window_title,
             'active_minutes': active_minutes,
+            'shot_datetime': shot_datetime,
             'file_name': f'{shot_datetime} {active_minutes} {project_name} {window_title}'
         }
     
@@ -49,6 +51,7 @@ class Shutter:
         )
         c.register_backend(platform.Backend())
         c.notify_all(notification)
+        print(f'📸 {info['shot_datetime']} | {title}')
 
     def active_window(self):
         import pygetwindow as gw
