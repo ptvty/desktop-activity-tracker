@@ -5,6 +5,7 @@ import random
 from pynotifier import NotificationClient, Notification
 from pynotifier.backends import platform
 from mss import mss
+from pathlib import Path
 from lib.activity import Activity
 
 class Shutter:
@@ -18,7 +19,9 @@ class Shutter:
 
     def shot(self):
         shot_info = self.shot_info()
-        output_file = f'Screenshots/{shot_info['file_name']}.png'
+        output_path = f'Screenshots/{shot_info['shot_date']}'
+        Path(output_path).mkdir(parents=True, exist_ok=True)
+        output_file = f'{output_path}/{shot_info['file_name']}.png'
         self.screenshotter.shot(mon=-1, output=output_file)
         self.beep()
         self.notify()
@@ -26,15 +29,17 @@ class Shutter:
     def shot_info(self):
         now = datetime.datetime.now()
         active_minutes = str(self.activity.activity())
-        shot_datetime = time.strftime("%Y-%m-%d %H-") + str(now.minute // 10) + '0'
+        shot_time = time.strftime("%H-") + str(now.minute // 10) + '0'
+        shot_date = time.strftime("%Y-%m-%d")
         window_title = self.slugify(self.active_window())
         project_name = self.project_name()
         return {
             'project_name': project_name,
             'window_title': window_title,
             'active_minutes': active_minutes,
-            'shot_datetime': shot_datetime,
-            'file_name': f'{shot_datetime} {active_minutes} {project_name} {window_title}'
+            'shot_time': shot_time,
+            'shot_date': shot_date,
+            'file_name': f'{shot_time} {active_minutes} {project_name} {window_title}'
         }
     
     def beep(self):
@@ -51,7 +56,7 @@ class Shutter:
         )
         c.register_backend(platform.Backend())
         c.notify_all(notification)
-        print(f'📸 {info['shot_datetime']} | {title}')
+        print(f'📸 {info['shot_time']} | {title}')
 
     def active_window(self):
         import pygetwindow as gw
