@@ -7,6 +7,7 @@ from pynotifier.backends import platform
 from mss import mss
 from pathlib import Path
 from lib.activity import Activity
+from lib.helpers import ShotInfo
 
 class Shutter:
     def __init__(self, activity: Activity) -> None:
@@ -26,7 +27,7 @@ class Shutter:
         self.beep()
         self.notify()
     
-    def shot_info(self):
+    def shot_info(self) -> ShotInfo:
         now = datetime.datetime.now()
         active_minutes = str(self.activity.activity())
         active_minutes_last_5 = str(self.activity.activity(5))

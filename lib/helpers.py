@@ -1,3 +1,4 @@
+from typing import TypedDict
 import argparse
 import io
 import sys
@@ -14,3 +15,14 @@ def null_stderr():
         def write(self, txt):
             pass
     sys.stderr = NullIO()
+
+class ShotInfo(TypedDict):
+    project_name: str
+    window_title: str
+    active_minutes: str
+    active_minutes_last_5: str
+    shot_hour: str
+    shot_minute: str
+    shot_date: str
+    file_name: str
+    project_name: str
