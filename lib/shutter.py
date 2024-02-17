@@ -29,7 +29,9 @@ class Shutter:
     def shot_info(self):
         now = datetime.datetime.now()
         active_minutes = str(self.activity.activity())
-        shot_time = time.strftime("%H-") + str(now.minute // 10) + '0'
+        active_minutes_last_5 = str(self.activity.activity(5))
+        shot_hour = time.strftime("%H")
+        shot_minute = str(now.minute // 10) + '0'
         shot_date = time.strftime("%Y-%m-%d")
         window_title = self.slugify(self.active_window())
         project_name = self.project_name()
@@ -37,9 +39,11 @@ class Shutter:
             'project_name': project_name,
             'window_title': window_title,
             'active_minutes': active_minutes,
-            'shot_time': shot_time,
+            'active_minutes_last_5': active_minutes_last_5,
+            'shot_hour': shot_hour,
+            'shot_minute': shot_minute,
             'shot_date': shot_date,
-            'file_name': f'{shot_time} {active_minutes} {project_name} {window_title}'
+            'file_name': f'{shot_hour}-{shot_minute} {active_minutes} {project_name} {window_title}'
         }
     
     def beep(self):
@@ -56,7 +60,7 @@ class Shutter:
         )
         c.register_backend(platform.Backend())
         c.notify_all(notification)
-        print(f'📸 {info['shot_time']} | {title}')
+        print(f'📸 {info['shot_hour']}:{info['shot_minute']} | {title}')
 
     def active_window(self):
         import pygetwindow as gw
