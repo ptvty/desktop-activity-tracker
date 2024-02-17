@@ -13,10 +13,11 @@ class Activity:
         if len(self.history) > 10:
             self.history.pop(0)
 
-    def activity(self):
+    def activity(self, timeframe = 10):
         active = 0
         for record in self.history:
-            if record[0] + record[1] > 2:
+            if record[0] + record[1] > 2 and timeframe > 0:
                 active += 1
+            timeframe -= 1
         return active
 

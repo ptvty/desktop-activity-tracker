@@ -20,6 +20,9 @@ class Shutter:
 
     def shot(self):
         shot_info = self.shot_info()
+        if shot_info['active_minutes_last_5'] == '0':
+            print(f'🚧 {shot_info['shot_hour']}:{shot_info['shot_minute']} | Screenshot skipped due to inactivity in last 5 minutes')
+            return
         output_path = f'Screenshots/{shot_info['shot_date']}'
         Path(output_path).mkdir(parents=True, exist_ok=True)
         output_file = f'{output_path}/{shot_info['file_name']}.png'
