@@ -22,6 +22,7 @@ class Shutter:
         shot_info = self.shot_info()
         if shot_info['active_minutes_last_5'] == '0':
             print(f'🚧 {shot_info['shot_hour']}:{shot_info['shot_minute']} | Screenshot skipped due to inactivity in last 5 minutes')
+            self.beep(True)
             return
         output_path = f'Screenshots/{shot_info['shot_date']}'
         Path(output_path).mkdir(parents=True, exist_ok=True)
@@ -50,8 +51,11 @@ class Shutter:
             'file_name': f'{shot_hour}-{shot_minute} {active_minutes} {project_name} {window_title}'
         }
     
-    def beep(self):
-        winsound.PlaySound("lib/shutter.wav", winsound.SND_FILENAME)
+    def beep(self, skipped = False):
+        if skipped:
+            winsound.PlaySound("lib/skipped.wav", winsound.SND_FILENAME)
+        else:
+            winsound.PlaySound("lib/shutter.wav", winsound.SND_FILENAME)
 
     def notify(self):
         c = NotificationClient()
